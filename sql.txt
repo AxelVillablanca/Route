@@ -1,0 +1,130 @@
+NOMBRE BASE DE DATOS:postman
+
+CREATE TABLE PRODUCTO (  
+
+  idProducto int NOT null AUTO_INCREMENT,  
+  nombre varchar(50) not null,  
+  descripcion varchar(100),
+  stock int not null,  
+  precio int not null,  
+  estado varchar(30) not null,
+  PRIMARY KEY (idProducto)
+);  
+
+  
+
+CREATE TABLE ENVIO (  
+
+  idEnvio int NOT null AUTO_INCREMENT,  
+  precioEnvio int not null,  
+  fechaEnvio DATE not null,  
+  direccionEnvio varchar(100) not null,  
+  regionEnvio varchar(50) not null,  
+  PRIMARY KEY (idEnvio)  
+);  
+
+  
+
+CREATE TABLE CLIENTE ( 
+
+  idCliente int NOT null AUTO_INCREMENT,  
+  nombreCliente varchar(50) not null,  
+  apellidoCliente varchar(50) not null,  
+  emailCliente varchar(50) not null,  
+  telefonoCliente int not null,  
+  PRIMARY KEY (idCliente) 
+); 
+
+  
+
+CREATE TABLE VENDEDOR ( 
+
+  idVendedor int NOT null AUTO_INCREMENT,  
+  nombreVendedor varchar(50) not null,  
+  password varchar(50) not null,  
+  emailVendedor varchar(50) not null,  
+  loginStatus int not null,  
+  PRIMARY KEY (idVendedor) 
+
+); 
+
+  
+
+CREATE TABLE CARRITO (  
+
+  idCarrito int NOT null AUTO_INCREMENT,  
+  precioSubtotal INt not null,  
+  idCliente int NOT null,
+  PRIMARY KEY (idCarrito),
+  FOREIGN KEY (idCliente) REFERENCES CLIENTE(idCliente) 
+);  
+
+  
+
+CREATE TABLE ITEMS (  
+
+  idItems int NOT null AUTO_INCREMENT,  
+  cantidadItem int not null,  
+  precioItem int NOT null, 
+  precioTotalItem int NOT null, 
+  idProducto int NOT null, 
+  idCarrito int NOT null, 
+  PRIMARY KEY (idItems), 
+  FOREIGN KEY (idCarrito) REFERENCES CARRITO(idCarrito), 
+  FOREIGN KEY (idProducto) REFERENCES PRODUCTO(idProducto)  
+
+);  
+
+  
+
+CREATE TABLE ORDEN (  
+
+  idOrden int NOT null AUTO_INCREMENT,  
+  fechaCreacion DATE not null,  
+  estado varchar(30) not null,  
+  precioTotal int not null,  
+  idCarrito int not null,  
+  idEnvio int not null,  
+  PRIMARY KEY (idOrden),  
+  FOREIGN KEY (idCarrito) REFERENCES CARRITO(idCarrito), 
+  FOREIGN KEY (idEnvio) REFERENCES ENVIO(idEnvio)  
+);  
+
+
+
+insert into PRODUCTO values (1,"Router1","Esta es la descripcion del producto 1",10,10000,"available");
+insert into PRODUCTO values (2,"Router2","Esta es la descripcion del producto 2",15,12000,"available");
+insert into PRODUCTO values (3,"Router3","Esta es la descripcion del producto 3",20,20000,"available");
+insert into PRODUCTO values (4,"Router4","Esta es la descripcion del producto 4",5,30000,"available");
+
+
+insert into CLIENTE values (1,"Juan","Huerta","JuanH@gmail.com",111111);
+insert into CLIENTE values (2,"Zoey","Tata","ZTT@gmail.com",222222);
+insert into CLIENTE values (3,"Allan","Nocks","allan@gmail.com",333333);
+insert into CLIENTE values (4,"Cristina","Gomez","crisg@gmail.com",444444);
+
+
+insert into ENVIO values (1,4000,"2022-04-20","Rengo 22","6ta region");
+insert into ENVIO values (2,5000,"2022-04-21","La florida 39","Region metropolitana");
+insert into ENVIO values (3,4000,"2022-04-23","Rancagua 197","6ta region");
+insert into ENVIO values (4,5600,"2022-04-23","Iquique 909","1ra Region");
+
+insert into CARRITO values (1,10000,1);
+insert into CARRITO values (2,12000,2);
+insert into CARRITO values (3,20000,3);
+insert into CARRITO values (4,30000,4);
+
+insert into ITEMS values (1,1,10000,10000,1,1);
+insert into ITEMS values (2,1,12000,12000,2,2);
+insert into ITEMS values (3,1,20000,20000,3,3);
+insert into ITEMS values (4,1,30000,30000,4,4);
+
+
+insert into ORDEN values (1,"2022-04-18","Entregado",14000,1,1);
+insert into ORDEN values (2,"2022-04-19","Entregado",17000,2,2);
+insert into ORDEN values (3,"2022-04-20","Enviado",24000,3,3);
+insert into ORDEN values (4,"2022-04-20","Enviado",35600,4,4);
+
+
+insert into VENDEDOR values (1,"Axel","123456","axel@gmail.com",1);
+insert into VENDEDOR values (2,"Vicente","654321","vicente@gmail.com",1);
